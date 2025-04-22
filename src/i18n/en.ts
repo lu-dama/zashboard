@@ -80,7 +80,7 @@ const en = {
   importSettings: 'Import Settings',
   unavailableProxy: 'Hide Unavailable Proxies',
   protocolTips:
-    'You are trying to connect a http backend but the zashboard is served by https. This may cause connection error. Please allow the insecure content in your browser settings. The settings is on the left of the browser address bar.',
+    'You are trying to connect to an HTTP backend, but zashboard is provided via HTTPS. This may cause connection errors. Please allow insecure content in your browser settings or use the HTTP version of the zashboard, such as http://board.zash.run.place.',
   global: 'Global',
   direct: 'Direct',
   lowLatencyDesc: 'Yellow Threshold',
@@ -171,6 +171,18 @@ const en = {
   themeName: 'Theme Name',
   save: 'Save',
   moreDetails: 'More Details',
+  customIcon: 'Custom Icon',
+  disablePullToRefresh: 'Disable Pull To Refresh',
+  disablePullToRefreshTip:
+    'Pull-to-refresh and virtual scrolling components may sometimes conflict. If you often experience lag or accidentally trigger pull-to-refresh while scrolling up and down, you can try disabling pull-to-refresh.',
+  displayAllFeatures: 'Display All Features',
+  displayAllFeaturesTip:
+    'Show all features, including those not supported by the official version of sing-box. If you are using a forked version of sing-box that supports some of these features, you can try enabling them.',
+  blurIntensity: 'Blurry Effect',
+  scrollAnimationEffect: 'Scroll Animation Effect',
+  importFromFile: 'Import From File',
+  importFromUrl: 'Import From URL',
+  sync: 'Sync',
 }
 
 export type LANG_MESSAGE = typeof en

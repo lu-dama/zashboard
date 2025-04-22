@@ -25,8 +25,8 @@ const zh: LANG_MESSAGE = {
   sortBy: '排序方式',
   rule: '规则',
   sourceIP: '源IP',
-  activeConnections: '活跃连接',
-  closedConnections: '已关闭连接',
+  activeConnections: '活跃',
+  closedConnections: '已关闭',
   logLevel: '日志等级',
   twoColumnProxyGroup: '双列显示代理组',
   type: '类型',
@@ -82,7 +82,7 @@ const zh: LANG_MESSAGE = {
   importSettings: '导入设置',
   unavailableProxy: '隐藏不可用节点',
   protocolTips:
-    '您正在尝试连接一个http后端但zashboard是通过https提供的，这可能会导致连接错误，请在浏览器设置中允许不安全的内容，设置在浏览器地址栏左侧。',
+    '您正在尝试连接一个http后端但zashboard是通过https提供的，这可能会导致连接错误，请在浏览器设置中允许不安全的内容，或者使用http版本面板例如http://board.zash.run.place',
   global: '全局',
   direct: '直连',
   lowLatencyDesc: '黄色的阈值',
@@ -170,6 +170,18 @@ const zh: LANG_MESSAGE = {
   themeName: '主题名称',
   save: '保存',
   moreDetails: '更多详情',
+  customIcon: '自定义图标',
+  disablePullToRefresh: '禁用下拉刷新',
+  disablePullToRefreshTip:
+    '下拉刷新和虚拟滚动的组件有时会有冲突，如果你在上下滚动的时候经常卡顿或者误触发下拉刷新，可以尝试禁用下拉刷新',
+  displayAllFeatures: '显示所有功能',
+  displayAllFeaturesTip:
+    '显示所有功能，包括sing-box官方版本不支持的功能，如果您使用了fork版本的sing-box支持其中的某些功能，可以尝试启用',
+  blurIntensity: '毛玻璃强度',
+  scrollAnimationEffect: '滚动动画效果',
+  importFromFile: '从文件导入',
+  importFromUrl: '从 URL 导入',
+  sync: '同步',
 }
 
 export default zh

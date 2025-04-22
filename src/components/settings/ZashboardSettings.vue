@@ -99,9 +99,9 @@
         </div>
         <div class="flex items-center gap-2">
           <span class="shrink-0"> {{ $t('customBackgroundURL') }} </span>
-          <div class="join">
+          <div class="join flex-1">
             <TextInput
-              class="join-item max-w-64 flex-1"
+              class="join-item w-48 max-w-64 flex-1"
               v-model="customBackgroundURL"
               :clearable="true"
               @update:modelValue="handlerBackgroundURLChange"
@@ -121,20 +121,41 @@
             @change="handlerFileChange"
           />
         </div>
-        <div
-          class="flex items-center gap-2"
-          v-if="customBackgroundURL"
-        >
-          {{ $t('transparent') }}
+        <template v-if="customBackgroundURL">
+          <div class="flex items-center gap-2">
+            {{ $t('transparent') }}
+            <input
+              type="range"
+              min="0"
+              max="100"
+              v-model="dashboardTransparent"
+              class="range max-w-64"
+              @touchstart.stop
+              @touchmove.stop
+              @touchend.stop
+            />
+          </div>
+
+          <div class="flex items-center gap-2">
+            {{ $t('blurIntensity') }}
+            <input
+              type="range"
+              min="0"
+              max="40"
+              v-model="blurIntensity"
+              class="range max-w-64"
+              @touchstart.stop
+              @touchmove.stop
+              @touchend.stop
+            />
+          </div>
+        </template>
+        <div class="flex items-center gap-2 md:hidden">
+          {{ $t('scrollAnimationEffect') }}
           <input
-            type="range"
-            min="0"
-            max="100"
-            v-model="dashboardTransparent"
-            class="range max-w-64"
-            @touchstart.stop
-            @touchmove.stop
-            @touchend.stop
+            type="checkbox"
+            v-model="scrollAnimationEffect"
+            class="toggle"
           />
         </div>
         <div class="flex items-center gap-2 md:hidden">
@@ -145,10 +166,37 @@
             class="toggle"
           />
         </div>
+        <div class="flex items-center gap-2 md:hidden">
+          {{ $t('disablePullToRefresh') }}
+          <input
+            type="checkbox"
+            v-model="disablePullToRefresh"
+            class="toggle"
+          />
+          <QuestionMarkCircleIcon
+            class="h-4 w-4 cursor-pointer"
+            @mouseenter="showTip($event, $t('disablePullToRefreshTip'))"
+          />
+        </div>
+        <div
+          class="flex items-center gap-2"
+          v-if="isSingBox"
+        >
+          {{ $t('displayAllFeatures') }}
+          <input
+            type="checkbox"
+            v-model="displayAllFeatures"
+            class="toggle"
+          />
+          <QuestionMarkCircleIcon
+            class="h-4 w-4 cursor-pointer"
+            @mouseenter="showTip($event, $t('displayAllFeaturesTip'))"
+          />
+        </div>
       </div>
       <div
         class="flex items-center gap-2"
-        v-if="!isSingBox"
+        v-if="!isSingBox || displayAllFeatures"
       >
         {{ $t('autoUpgrade') }}
         <input
@@ -158,7 +206,7 @@
         />
       </div>
       <div class="grid max-w-3xl grid-cols-2 gap-2 sm:grid-cols-4">
-        <template v-if="!isSingBox">
+        <template v-if="!isSingBox || displayAllFeatures">
           <button
             :class="twMerge('btn btn-primary btn-sm', isUIUpgrading ? 'animate-pulse' : '')"
             @click="handlerClickUpgradeUI"
@@ -186,6 +234,7 @@ import LanguageSelect from '@/components/settings/LanguageSelect.vue'
 import { useSettings } from '@/composables/settings'
 import { ALL_THEME, FONTS } from '@/constant'
 import { exportSettings } from '@/helper'
+import { useTooltip } from '@/helper/tooltip'
 import {
   deleteBase64FromIndexedDB,
   isPWA,
@@ -195,15 +244,24 @@ import {
 import {
   autoTheme,
   autoUpgrade,
+  blurIntensity,
   customBackgroundURL,
   customThemes,
   darkTheme,
   dashboardTransparent,
   defaultTheme,
+  disablePullToRefresh,
+  displayAllFeatures,
   font,
+  scrollAnimationEffect,
   swipeInTabs,
 } from '@/store/settings'
-import { ArrowPathIcon, ArrowUpCircleIcon, PlusIcon } from '@heroicons/vue/24/outline'
+import {
+  ArrowPathIcon,
+  ArrowUpCircleIcon,
+  PlusIcon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/vue/24/outline'
 import { twMerge } from 'tailwind-merge'
 import { computed, ref } from 'vue'
 import ImportSettings from '../common/ImportSettings.vue'
@@ -211,6 +269,8 @@ import TextInput from '../common/TextInput.vue'
 import CustomTheme from './CustomTheme.vue'
 
 const customThemeModal = ref(false)
+
+const { showTip } = useTooltip()
 
 const inputFileRef = ref()
 const handlerClickUpload = () => {

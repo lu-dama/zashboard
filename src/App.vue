@@ -6,7 +6,14 @@ import { RouterView } from 'vue-router'
 import { useNotification } from './composables/notification'
 import { FONTS } from './constant'
 import { getBase64FromIndexedDB, isPreferredDark, LOCAL_IMAGE } from './helper/utils'
-import { customBackgroundURL, dashboardTransparent, font, theme } from './store/settings'
+import {
+  blurIntensity,
+  customBackgroundURL,
+  dashboardTransparent,
+  disablePullToRefresh,
+  font,
+  theme,
+} from './store/settings'
 
 const app = ref<HTMLElement>()
 const { tipContent, tipShowModel, tipType } = useNotification()
@@ -58,6 +65,22 @@ const setThemeColor = () => {
 
 watch(isPreferredDark, setThemeColor)
 
+watch(
+  disablePullToRefresh,
+  () => {
+    if (disablePullToRefresh.value) {
+      document.body.style.overscrollBehavior = 'none'
+      document.documentElement.style.overscrollBehavior = 'none'
+    } else {
+      document.body.style.overscrollBehavior = ''
+      document.documentElement.style.overscrollBehavior = ''
+    }
+  },
+  {
+    immediate: true,
+  },
+)
+
 onMounted(() => {
   watch(
     theme,
@@ -70,6 +93,14 @@ onMounted(() => {
     },
   )
 })
+
+const blurClass = computed(() => {
+  if (!backgroundImage.value || blurIntensity.value === 0) {
+    return ''
+  }
+
+  return `blur-intensity-${blurIntensity.value}`
+})
 </script>
 
 <template>
@@ -81,12 +112,13 @@ onMounted(() => {
       fontClassName,
       backgroundImage &&
         `custom-background-${dashboardTransparent} custom-background bg-cover bg-center`,
+      blurClass,
     ]"
     :style="backgroundImage"
   >
     <RouterView />
     <div
-      class="toast-sm toast toast-end toast-top z-50 max-w-64 text-sm opacity-80 md:translate-y-8"
+      class="toast-sm toast toast-end toast-top z-50 max-w-64 text-sm md:translate-y-8"
       v-if="tipShowModel"
     >
       <div

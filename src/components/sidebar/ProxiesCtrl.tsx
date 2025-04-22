@@ -27,6 +27,7 @@ import {
   ChevronUpIcon,
   WrenchScrewdriverIcon,
 } from '@heroicons/vue/24/outline'
+import { every } from 'lodash'
 import { computed, defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import DialogWrapper from '../common/DialogWrapper.vue'
@@ -65,10 +66,12 @@ export default defineComponent({
       return proxyProviederList.value.length > 0
     })
 
+    const defaultModes = ['direct', 'rule', 'global']
     const modeList = computed(() => {
-      return (
-        configs.value?.['mode-list'] || configs.value?.['modes'] || ['direct', 'rule', 'global']
-      )
+      return configs.value?.['mode-list'] || configs.value?.['modes'] || defaultModes
+    })
+    const needTranslateModes = computed(() => {
+      return every(modeList.value, (mode) => defaultModes.includes(mode.toLowerCase()))
     })
 
     const handlerModeChange = (e: Event) => {
@@ -172,7 +175,7 @@ export default defineComponent({
                 key={mode}
                 value={mode}
               >
-                {t(mode.toLowerCase())}
+                {needTranslateModes.value ? t(mode.toLowerCase()) : mode}
               </option>
             )
           })}
@@ -211,7 +214,12 @@ export default defineComponent({
 
       const toggleCollapseAll = (
         <button
-          class={['btn btn-circle btn-sm', twoColumnProxyGroup.value && 'max-sm:hidden']}
+          class={[
+            'btn btn-circle btn-sm',
+            twoColumnProxyGroup.value &&
+              proxiesTabShow.value === PROXY_TAB_TYPE.PROXIES &&
+              'max-sm:hidden',
+          ]}
           onClick={handlerClickToggleCollapse}
         >
           {hasNotCollapsed.value ? (
