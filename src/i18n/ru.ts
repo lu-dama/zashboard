@@ -140,6 +140,8 @@ const ru: LANG_MESSAGE = {
   manual: 'Ручной',
   tableWidthMode: 'Режим ширины таблицы',
   testFinishedTip: '{number} Тест завершен',
+  testFinishedResultTip: 'Тест завершен, {success} Успешно, {failed} Таймаут',
+  testFailedTip: 'Тест задержки таймаут',
   updateFinishedTip: '{number} Обновление завершено',
   independentLatencyTest: 'Независимый тест задержки',
   independentLatencyTestTip:
@@ -155,6 +157,7 @@ const ru: LANG_MESSAGE = {
   label: 'Метка',
   optional: 'Необязательно',
   swipeInTabs: 'Провести для переключения вкладок',
+  swipeInPages: 'Провести для переключения страниц',
   simpleCardPreset: 'Простой',
   detailedCardPreset: 'Подробный',
   refresh: 'Обновить',
@@ -185,6 +188,27 @@ const ru: LANG_MESSAGE = {
   importFromFile: 'Импортировать из файла',
   importFromUrl: 'Импортировать из URL',
   sync: 'Синхронизировать',
+  upgradeSuccess: 'Обновление успешно',
+  numberOfChartsInSidebar: 'Количество графиков в боковой панели',
+  displayWeights: 'Показать веса',
+  flushWeights: 'Очистить веса',
+  flushSmartWeights: 'Очистить Smart веса',
+  IPInfoAPI: 'API информации о IP',
+  IPInfoAPITip:
+    'Этот API будет использоваться для проверки IP-адресов при запросах информации о глобальных узлах, определения геолокации IP-адресов в деталях соединения, а также для определения геолокации IP-адресов при DNS-запросах в панели.',
+  general: 'Универсальный',
+  groupProxiesByProvider: 'Группировать прокси по провайдеру',
+  RarelyUsed: 'Редко используется',
+  OccasionalUsed: 'Временно используется',
+  MostUsed: 'Часто используется',
+  all: 'Все',
+  autoDisconnectIdleUDP: 'Автоматически отключить UDP-идле',
+  autoDisconnectIdleUDPTime: 'Время UDP-идле',
+  autoDisconnectIdleUDPTip:
+    'При включении открытие zashboard приведёт к закрытию UDP-соединений, продолжительность которых превышает заданное количество минут. Это может помочь в случае с некоторыми UDP-соединениями, которые не разрываются автоматически, как ожидается.',
+  customGlobalNode: 'Пользовательский глобальный узел',
+  proxiesRelationship: 'Отношение прокси',
+  displayProxiesRelationship: 'Показать отношение прокси',
 }
 
 export default ru

@@ -33,11 +33,11 @@
         <template v-if="isMiddleScreen">
           <div
             class="nav-bar shrink-0"
-            :class="isPWA ? 'h-[5.5rem]' : 'h-14'"
+            :style="styleForSafeArea"
           />
           <div
             class="dock dock-sm bg-base-200 z-30"
-            :class="isPWA ? 'h-[5.5rem] pb-8' : 'h-14'"
+            :style="styleForSafeArea"
           >
             <button
               v-for="r in renderRoutes"
@@ -87,19 +87,17 @@ import ProxiesCtrl from '@/components/sidebar/ProxiesCtrl.tsx'
 import RulesCtrl from '@/components/sidebar/RulesCtrl.tsx'
 import SideBar from '@/components/sidebar/SideBar.vue'
 import { useNotification } from '@/composables/notification'
-import { useProxies } from '@/composables/proxies'
-import { rulesTabShow } from '@/composables/rules'
 import { useSettings } from '@/composables/settings'
 import { useSwipeRouter } from '@/composables/swipe'
 import { PROXY_TAB_TYPE, ROUTE_ICON_MAP, ROUTE_NAME, RULE_TAB_TYPE } from '@/constant'
-import { getUrlFromBackend, renderRoutes } from '@/helper'
-import { isMiddleScreen, isPWA } from '@/helper/utils'
+import { renderRoutes } from '@/helper'
+import { getLabelFromBackend, isMiddleScreen } from '@/helper/utils'
 import { fetchConfigs } from '@/store/config'
 import { initConnections } from '@/store/connections'
 import { initLogs } from '@/store/logs'
 import { initSatistic } from '@/store/overview'
-import { fetchProxies } from '@/store/proxies'
-import { fetchRules } from '@/store/rules'
+import { fetchProxies, proxiesTabShow } from '@/store/proxies'
+import { fetchRules, rulesTabShow } from '@/store/rules'
 import { isSidebarCollapsed } from '@/store/settings'
 import { activeBackend, activeUuid, backendList } from '@/store/setup'
 import type { Backend } from '@/types'
@@ -114,8 +112,12 @@ const ctrlsMap: Record<string, Component> = {
   [ROUTE_NAME.rules]: RulesCtrl,
 }
 
+const styleForSafeArea = {
+  height: 'calc(var(--spacing) * 14 + env(safe-area-inset-bottom))',
+  'padding-bottom': 'env(safe-area-inset-bottom)',
+}
+
 const router = useRouter()
-const { proxiesTabShow } = useProxies()
 const { swiperRef } = useSwipeRouter()
 
 watch(
@@ -162,7 +164,7 @@ const autoSwitchBackend = async () => {
     showNotification({
       content: 'backendSwitchTo',
       params: {
-        backend: getUrlFromBackend(avaliable),
+        backend: getLabelFromBackend(avaliable),
       },
     })
   }

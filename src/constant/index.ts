@@ -7,6 +7,7 @@ import {
   SwatchIcon,
 } from '@heroicons/vue/24/outline'
 
+export const GLOBAL = 'GLOBAL'
 export const TEST_URL = 'https://www.gstatic.com/generate_204'
 export const IPV6_TEST_URL = 'https://ipv6.google.com/generate_204'
 export const NOT_CONNECTED = 0
@@ -42,6 +43,7 @@ export enum CONNECTIONS_TABLE_ACCESSOR_KEY {
   Destination = 'destination',
   DestinationType = 'destinationType',
   RemoteAddress = 'remoteAddress',
+  InboundUser = 'inboundUser',
 }
 
 export enum TABLE_WIDTH_MODE {
@@ -84,6 +86,7 @@ export enum SORT_TYPE {
   UPLOAD = 'upload',
   UPLOAD_SPEED = 'uploadSpeed',
   SOURCE_IP = 'sourceIP',
+  INBOUND_USER = 'inboundUser',
 }
 
 export enum SORT_DIRECTION {
@@ -157,6 +160,7 @@ export enum PROXY_TYPE {
   Selector = 'selector',
   Fallback = 'fallback',
   URLTest = 'urltest',
+  Smart = 'smart',
   LoadBalance = 'loadbalance',
 }
 
@@ -266,3 +270,9 @@ export const DEFAULT_THEME = {
 }
 
 export type THEME = Record<string, string>
+
+export enum IP_INFO_API {
+  IPSB = 'ip.sb',
+  IPWHOIS = 'ipwho.is',
+  IPAPI = 'ipapi.is',
+}
